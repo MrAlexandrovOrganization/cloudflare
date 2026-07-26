@@ -8,7 +8,9 @@ services:
     hostname: cloudflared
     image: cloudflare/cloudflared:2026.7.3
     restart: unless-stopped
-    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    command: tunnel --no-autoupdate run --credentials-file /home/nonroot/.cloudflared/creds.json ${TUNNEL_ID}
+    volumes:
+      - ${TUNNEL_CREDS_FILE}:/home/nonroot/.cloudflared/creds.json:ro
     networks:
       - caddy-net
     extends:
