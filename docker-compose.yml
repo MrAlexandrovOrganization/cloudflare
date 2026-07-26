@@ -1,0 +1,16 @@
+networks:
+  caddy-net:
+    external: true
+
+services:
+  cloudflared:
+    container_name: cloudflared
+    hostname: cloudflared
+    image: cloudflare/cloudflared:2026.7.3
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    networks:
+      - caddy-net
+    extends:
+      file: docker-compose.base.yml
+      service: base
